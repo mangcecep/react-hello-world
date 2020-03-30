@@ -95,6 +95,10 @@ export class BlogPost extends Component {
         // })
     }
 
+    handleDetail = (id) => {
+        this.props.history.push(`/detail-post/${id}`);
+    }
+
     handleSubmit = () => {
         if (this.state.isUpdate) {
              this.putDataToAPi();
@@ -137,7 +141,11 @@ export class BlogPost extends Component {
                 </div>
                 {
                     this.state.post.map(post => {
-                        return <Post key={post.id} data={post} remove={this.handleRemove} update={this.handleUpdate}/>
+                        return <Post
+                        key={post.id}
+                        data={post} remove={this.handleRemove}
+                        update={this.handleUpdate}
+                        goDetail={this.handleDetail}/>
                     })
                 }
             </Fragment>
