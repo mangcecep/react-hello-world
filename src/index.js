@@ -5,11 +5,21 @@ import * as serviceWorker from './serviceWorker';
 
 import Home from './container/Home/Home';
 
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+import rootReducer from './redux/reducer/globalReducer'
+
+// store
+const store = createStore(rootReducer);
+
 
 ReactDOM.render(
-  <React.StrictMode>
+  //<React.StrictMode>
+  <Provider store={store}>
     <Home />
-  </React.StrictMode>,
+  </Provider>,
+  //</React.StrictMode>,
   document.getElementById('root')
 );
 
