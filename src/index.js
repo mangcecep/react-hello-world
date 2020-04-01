@@ -5,21 +5,21 @@ import * as serviceWorker from './serviceWorker';
 
 import Home from './container/Home/Home';
 
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
+// import {createStore} from 'redux';
+// import {Provider} from 'react-redux';
 
-import rootReducer from './redux/reducer/globalReducer'
+// import rootReducer from './redux/reducer/globalReducer'
 
 // store
-const store = createStore(rootReducer);
+// const store = createStore(rootReducer);
 
 
 ReactDOM.render(
-  //<React.StrictMode>
-  <Provider store={store}>
+  <React.StrictMode>
+  {/* <Provider store={store}> */}
     <Home />
-  </Provider>,
-  //</React.StrictMode>,
+  {/* </Provider>, */}
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
