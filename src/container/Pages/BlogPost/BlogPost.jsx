@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import './BlogPost.css'
 import Post from '../../../component/Post/Post'
 import axios from 'axios'
+import API from '../../../service'
 
 export class BlogPost extends Component {
     state = {
@@ -12,24 +13,36 @@ export class BlogPost extends Component {
             body: '',
             userId: 1
         },
-        isUpdate: false
+        isUpdate: false,
+        comments: []
     }
 
     getPostApi = () => {
-        axios.get('http://localhost:3004/posts?_sort=id&_order=desc')
-        .then((res) => {
-            // console.log(res.data);
-            this.setState({
-                post: res.data
+        API.getNewsBlog().then(res => {
+             // console.log(res.data);
+             this.setState({
+                post: res
             })
         })
+        API.getComments().then(res => {
+            this.setState({
+                comments: res
+            })
+        })
+        // axios.get('http://localhost:3004/posts?_sort=id&_order=desc')
+        // .then((res) => {
+        //     // console.log(res.data);
+        //     this.setState({
+        //         post: res.data
+        //     })
+        // })
     }
 
-    postDataToApi = () =>{
-        axios.post('http://localhost:3004/posts/', this.state.formBlogPost)
-        .then(res => {
-            console.log(res);
+    postDataToApi = () => {
+        API.postNewsBlog(this.state.formBlogPost)
+        .then( (res) => {
             this.getPostApi();
+            console.log(res);
             this.setState({
                 formBlogPost : {
                     id: 1,
@@ -38,15 +51,27 @@ export class BlogPost extends Component {
                     userId: 1
                 },
             })
-        }, (err) => {
-            console.log(err)
         })
+        // axios.post('http://localhost:3004/posts/', this.state.formBlogPost)
+        // .then(res => {
+        //     console.log(res);
+        //     this.getPostApi();
+        //     this.setState({
+        //         formBlogPost : {
+        //             id: 1,
+        //             title: '',
+        //             body: '',
+        //             userId: 1
+        //         },
+        //     })
+        // }, (err) => {
+        //     console.log(err)
+        // })
     }
 
     putDataToAPi = () => {
-        axios.put(`http://localhost:3004/posts/${this.state.formBlogPost.id}`, this.state.formBlogPost)
-        .then(res=> {
-            console.log(res);
+        API.updateNewsBlog(this.state.formBlogPost, this.state.formBlogPost.id)
+        .then(res => {
             this.getPostApi();
             this.setState({
                 isUpdate: false,
@@ -58,14 +83,32 @@ export class BlogPost extends Component {
                 },
             })
         })
+        // axios.put(`http://localhost:3004/posts/${this.state.formBlogPost.id}`, this.state.formBlogPost)
+        // .then(res=> {
+        //     console.log(res);
+        //     this.getPostApi();
+        //     this.setState({
+        //         isUpdate: false,
+        //         formBlogPost : {
+        //             id: 1,
+        //             title: '',
+        //             body: '',
+        //             userId: 1
+        //         },
+        //     })
+        // })
     }
 
     handleRemove = data => {
         // console.log(data)
-        axios.delete(`http://localhost:3004/posts/${data}`)
-        .then((res)=> {
+        API.deleteNewsBlog(data)
+        .then(res => {
             this.getPostApi()
         })
+        // axios.delete(`http://localhost:3004/posts/${data}`)
+        // .then((res)=> {
+        //     this.getPostApi()
+        // })
     }
 
     handleUpdate = data => {
@@ -87,7 +130,7 @@ export class BlogPost extends Component {
 
         // console.log(timestamp);
         // console.log(event.target.name);
-        
+
         this.setState({
             formBlogPost: formBlogPostNew
          })//, () => {
@@ -129,7 +172,7 @@ export class BlogPost extends Component {
                 <p className="section-title">Blog Post</p>
                 <div className="form-add-post">
 
-                    <label 
+                    <label
                     htmlFor="title">
                         Title
                     </label>
@@ -139,6 +182,11 @@ export class BlogPost extends Component {
                     <textarea name="body" id="body" cols="30" rows="10" placeholder="add blog content" onChange={this.handleFormChange} value={this.state.formBlogPost.body}></textarea>
                     <button className="btn-submit" onClick={this.handleSubmit}>Save</button>
                 </div>
+                {/* {
+                    this.state.comments.map(comment => {
+                        return <p>{comment.name} - {comment.email}</p>
+                    })
+                } */}
                 {
                     this.state.post.map(post => {
                         return <Post

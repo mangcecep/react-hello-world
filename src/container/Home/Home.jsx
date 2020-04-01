@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment /*,createContext*/ } from 'react'
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 
@@ -9,41 +9,40 @@ import YoutubeCompPage from '../Pages/YoutubeComp/YoutubeCompPage'
 import DetailPost from '../Pages/BlogPost/DetailPost/DetailPost';
 
 import './Home.css'
+import  GlobalProvider  from '../../context/context';
 
 class Home extends Component {
-    state = {
-        showComponent: true
-    }
+    // state = {
+    //     showComponent: true
+    // }
 
-    componentDidMount(){
+    // componentDidMount(){
         // setTimeout(() => {
         //     this.setState({
         //         showComponent: false
         //     })
         // }, 15000)
-    }
+    // }
 
     render() {
         return (
             <BrowserRouter>
-                <Fragment>
-                    <div className="navigation">
-                        <Link to="/">Blog Post</Link>
-                        <Link to="/product">Product</Link>
-                        <Link to="/lifeCycle">Lifecycle</Link>
-                        <Link to="/youtubecomp">Youtube Component</Link>
-                    </div>
-                    <Route path="/" exact component={BlogPost} />
-                    <Route path="/detail-post/:id" component={DetailPost}/>
-                    <Route path="/product" component={Product} />
-                    <Route path="/lifecycle" component={LifeCycleComp} />
-                    <Route path="/youtubeComp" component={YoutubeCompPage} />
-                </Fragment>
-
-
+                    <Fragment>
+                        <div className="navigation">
+                            <Link to="/">Blog Post</Link>
+                            <Link to="/product">Product</Link>
+                            <Link to="/lifeCycle">Lifecycle</Link>
+                            <Link to="/youtubecomp">Youtube Component</Link>
+                        </div>
+                        <Route path="/" exact component={BlogPost} />
+                        <Route path="/detail-post/:id" component={DetailPost}/>
+                        <Route path="/product" component={Product} />
+                        <Route path="/lifecycle" component={LifeCycleComp} />
+                        <Route path="/youtubeComp" component={YoutubeCompPage} />
+                    </Fragment>
             </BrowserRouter>
         )
     }
 }
 
-export default Home
+export default GlobalProvider(Home)
