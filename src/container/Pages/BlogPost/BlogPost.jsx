@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './BlogPost.css'
 import Post from '../../../component/Post/Post'
-import axios from 'axios'
+// import axios from 'axios'
 import API from '../../../service'
 
 export class BlogPost extends Component {
